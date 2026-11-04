@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="light dark">
+<meta name="color-scheme" content="light">
 <title>تواصل معنا | الثريا للاستشارات التربوية</title>
 <style>
 :root {
@@ -11,7 +11,7 @@
   --site-on-primary: #172235;
   --site-secondary: #172235;
   --site-on-secondary: #FFFFFF;
-  --site-background: #4CC3D0;
+  --site-background: #F4F1E8;
   --site-on-background: #1E2938;
   --site-font-body: Tahoma, Arial, sans-serif;
   --site-font-heading: Tahoma, Arial, sans-serif;
@@ -206,6 +206,26 @@ input:focus, textarea:focus { border-color:var(--site-primary); box-shadow:0 0 0
 .form-top { margin-bottom:28px; }
 .submit-row { justify-content:flex-start; }
 .submit-btn { min-width:190px; }
+
+/* Requested turquoise form surface */
+.form-panel { background:#4CC3D0; }
+
+/* Compact layout for narrow phone screens */
+@media (max-width: 600px) {
+  .site-root { padding:12px 10px 20px; }
+  .content-grid { width:100%; max-width:100%; margin:0 auto; }
+  .intro-panel { padding:0 0 12px; }
+  .logo-tile { width:64px; height:64px; flex-basis:64px; }
+  .form-panel { width:100%; max-width:100%; padding:20px 16px; border-radius:16px; }
+  .form-top { gap:8px; margin-bottom:20px; flex-wrap:wrap; }
+  .form-title { font-size:21px; }
+  .field-grid { grid-template-columns:minmax(0,1fr); gap:14px; }
+  .field.full { grid-column:1; }
+  input, textarea { font-size:16px; }
+  textarea { min-height:120px; }
+  .submit-row { width:100%; }
+  .submit-btn { width:100%; min-width:0; }
+}
 </style>
 </head>
 <body>
