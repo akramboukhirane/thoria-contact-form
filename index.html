@@ -240,24 +240,24 @@ input:focus, textarea:focus { border-color:var(--site-primary); box-shadow:0 0 0
           <h2 class="form-title">تواصل معنا</h2>
           <span class="required-note"><span class="req">*</span> حقول مطلوبة</span>
         </div>
-        <form id="contactForm">
+        <form id="contactForm" action="https://docs.google.com/forms/d/e/1FAIpQLSfuQiWl4Z-hkjm1p5n5qY6AoqBkTeVxMCe6hsQhhr0xUNmFoA/formResponse" method="POST" target="googleFormTarget">
           <div class="field-grid">
             <div class="field">
               <label for="fullName">الاسم الكامل <span class="req">*</span></label>
-              <input id="fullName" name="fullName" type="text" placeholder="اكتب اسمك الكامل" autocomplete="name" required>
+              <input id="fullName" name="entry.265146213" type="text" placeholder="اكتب اسمك الكامل" autocomplete="name" required>
             </div>
             <div class="field">
               <label for="orgName">اسم المؤسسة <span class="req">*</span></label>
-              <input id="orgName" name="orgName" type="text" placeholder="اسم المدرسة أو الروضة أو المركز" required>
+              <input id="orgName" name="entry.151835332" type="text" placeholder="اسم المدرسة أو الروضة أو المركز" required>
             </div>
             <div class="field full">
               <label for="email">البريد الإلكتروني <span class="req">*</span></label>
-              <input id="email" name="email" type="email" placeholder="name@example.com" autocomplete="email" required dir="ltr">
+              <input id="email" name="entry.1583038349" type="email" placeholder="name@example.com" autocomplete="email" required dir="ltr">
               <div class="helper">يرجى إدخال بريد إلكتروني يمكن التواصل معك من خلاله.</div>
             </div>
             <div class="field full">
               <label for="details">تفاصيل الطلب <span class="req">*</span></label>
-              <textarea id="details" name="details" placeholder="ما التحدي الذي ترغب في العمل عليه؟ أخبرني قليلًا عن احتياج مؤسستك..." required></textarea>
+              <textarea id="details" name="entry.39749079" placeholder="ما التحدي الذي ترغب في العمل عليه؟ أخبرني قليلًا عن احتياج مؤسستك..." required></textarea>
             </div>
           </div>
           <div class="submit-row">
@@ -265,7 +265,17 @@ input:focus, textarea:focus { border-color:var(--site-primary); box-shadow:0 0 0
             <div class="form-footnote">تساعدني التفاصيل التي تشاركها على فهم احتياجك والاستعداد للمحادثة الأولى.</div>
           </div>
           <div id="demoMessage" class="demo-message" role="status">هذه معاينة للتصميم فقط؛ لم يتم إرسال البيانات إلى Google Forms بعد.</div>
+          <input type="hidden" name="fvv" value="1">
+          <input type="hidden" name="pageHistory" value="0">
         </form>
+        <iframe
+          name="googleFormTarget"
+          id="googleFormTarget"
+          title="إرسال النموذج"
+          aria-hidden="true"
+          tabindex="-1"
+          style="position:absolute;width:1px;height:1px;left:-9999px;border:0;">
+        </iframe>
       </div>
     </section>
     <div class="bottom-line">الثريا للاستشارات التربوية <span>·</span> إضاءة الطريق نحو تعليم أعمق أثرًا</div>
@@ -274,11 +284,36 @@ input:focus, textarea:focus { border-color:var(--site-primary); box-shadow:0 0 0
 <script>
   const form = document.getElementById('contactForm');
   const message = document.getElementById('demoMessage');
-  form.addEventListener('submit', function (event) {
-    event.preventDefault();
-    if (!form.reportValidity()) return;
+  const submitButton = form.querySelector('button[type="submit"]');
+  const responseFrame = document.getElementById('googleFormTarget');
+  let waitingForGoogle = false;
+  let submissionTimer = null;
+
+  function finishSubmission(text, resetForm) {
+    waitingForGoogle = false;
+    if (submissionTimer) clearTimeout(submissionTimer);
+    message.textContent = text;
     message.classList.add('show');
     message.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    submitButton.disabled = false;
+    submitButton.innerHTML = 'إرسال الطلب <span aria-hidden="true">←</span>';
+    if (resetForm) form.reset();
+  }
+
+  responseFrame.addEventListener('load', function () {
+    if (!waitingForGoogle) return;
+    finishSubmission('تم إرسال طلبك إلى نموذج Google. شكرًا لتواصلك معنا.', true);
+  });
+
+  form.addEventListener('submit', function () {
+    waitingForGoogle = true;
+    message.classList.remove('show');
+    submitButton.disabled = true;
+    submitButton.textContent = 'جارٍ إرسال الطلب...';
+    submissionTimer = setTimeout(function () {
+      if (!waitingForGoogle) return;
+      finishSubmission('تم إرسال الطلب، لكن لم يصل تأكيد من Google Forms. يرجى مراجعة الردود قبل إعادة الإرسال.', false);
+    }, 10000);
   });
 </script>
 
