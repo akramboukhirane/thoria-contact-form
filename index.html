@@ -259,6 +259,24 @@ body { min-height: 0; }
   .form-top { margin-bottom: 18px; }
 }
 
+
+/* Let the embedded document end at the form instead of filling the iframe viewport */
+html, body {
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 0;
+  overflow: visible !important;
+}
+.site-root {
+  height: auto !important;
+  min-height: 0 !important;
+  padding-bottom: 0 !important;
+  overflow: visible !important;
+}
+.wrap { height: auto !important; min-height: 0 !important; }
+.content-grid { height: auto !important; min-height: 0 !important; }
+.form-panel { height: auto !important; min-height: 0 !important; }
+
 </style>
 </head>
 <body>
