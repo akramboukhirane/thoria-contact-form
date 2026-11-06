@@ -226,6 +226,39 @@ input:focus, textarea:focus { border-color:var(--site-primary); box-shadow:0 0 0
   .submit-row { width:100%; }
   .submit-btn { width:100%; min-width:0; }
 }
+
+/* Remove the standalone page background and logo header for seamless Google Sites embedding */
+html, body { background: transparent !important; }
+body { min-height: 0; }
+.site-root {
+  min-height: 0;
+  padding: 0 !important;
+  background: transparent !important;
+  overflow: visible;
+}
+.site-root::before, .site-root::after { display: none !important; }
+.eyebrow, .hero-title, .hero-copy, .intro-panel { display: none !important; }
+.content-grid {
+  display: block;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto !important;
+}
+.form-panel {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  background: #4CC3D0 !important;
+  border: 0;
+  border-radius: 18px;
+  box-shadow: none;
+}
+@media (max-width: 600px) {
+  .content-grid { width: 100%; margin: 0 !important; }
+  .form-panel { padding: 20px 16px; border-radius: 14px; }
+  .form-top { margin-bottom: 18px; }
+}
+
 </style>
 </head>
 <body>
